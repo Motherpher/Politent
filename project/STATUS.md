@@ -4,7 +4,7 @@
 **Protocol:** POL-HH-001  
 **Current phase:** Phase I — Data Foundation and QGIS Spatial Backbone  
 **Current WP:** WP1.1 — Project scaffold and PostGIS environment  
-**State:** ACTIVE
+**State:** REVIEW
 
 ## Household state
 
@@ -15,8 +15,8 @@
 
 ## Current gate
 
-WP1.1 must establish a reproducible repository/runtime scaffold before WP1.2 is accepted.
+WP1.1 scaffold is implemented. Runtime validation is now under review through the repository bootstrap workflow before Director acceptance.
 
 ## Next execution sequence
 
-Janitor scan → bounded scaffold build/repair → Janitor re-scan → Director acceptance decision.
+Bootstrap workflow → Janitor re-scan → Director acceptance decision.
