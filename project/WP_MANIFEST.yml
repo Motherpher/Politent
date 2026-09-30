@@ -27,11 +27,11 @@ phases:
     work_packages:
       - id: WP1.1
         title: Project scaffold and PostGIS environment
-        status: ACTIVE
+        status: ACCEPTED
         depends_on: []
       - id: WP1.2
         title: Versioned geography and crosswalk engine
-        status: STAGED
+        status: ACTIVE
         depends_on: [WP1.1]
       - id: WP1.3
         title: Official election-result backbone
@@ -120,5 +120,5 @@ phases:
 
 current:
   phase: P1
-  wp: WP1.1
+  wp: WP1.2
   next_gate: director_acceptance
