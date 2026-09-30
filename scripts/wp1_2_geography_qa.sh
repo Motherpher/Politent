@@ -32,11 +32,11 @@ unzip -q "$WORK/valdistrikt_2026.zip" -d "$WORK/val2026"
 echo "Election Authority ZIP contents:"
 find "$WORK/val2026" -maxdepth 3 -type f -printf "%P\n" | head -50
 
-mapfile -d '' val_json_files < <(find "$WORK/val2026" -type f -iname '*.json' -print0)
+mapfile -d '' val_json_files < <(find "$WORK/val2026" -type f \( -iname '*.json' -o -iname '*.geojson' \) -print0)
 json_files="${#val_json_files[@]}"
-echo "Election Authority JSON file count: $json_files"
+echo "Election Authority GIS JSON/GeoJSON file count: $json_files"
 if [[ "$json_files" -eq 0 ]]; then
-  echo "No .json files detected in Election Authority GIS ZIP" >&2
+  echo "No JSON/GeoJSON files detected in Election Authority GIS ZIP" >&2
   exit 1
 fi
 
