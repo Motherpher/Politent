@@ -1,0 +1,58 @@
+name: WP1.1 Bootstrap Validation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "schemas/**"
+      - "scripts/**"
+      - "config/**"
+      - "qgis/**"
+      - "docker-compose.yml"
+      - ".env.example"
+      - "Makefile"
+      - ".github/workflows/wp1_1_bootstrap.yml"
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    services:
+      postgis:
+        image: postgis/postgis:16-3.4
+        env:
+          POSTGRES_DB: politent
+          POSTGRES_USER: politent
+          POSTGRES_PASSWORD: politent_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U politent -d politent"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+
+    env:
+      PGPASSWORD: politent_ci
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate repository scaffold
+        run: python3 scripts/validate_scaffold.py
+
+      - name: Install PostgreSQL client
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+
+      - name: Apply Politent schema
+        run: psql -h localhost -U politent -d politent -v ON_ERROR_STOP=1 -f schemas/politent_core_schema.sql
+
+      - name: Validate PostGIS and canonical tables
+        run: |
+          psql -h localhost -U politent -d politent -Atc "SELECT extversion FROM pg_extension WHERE extname='postgis';"
+          for t in source_registry party election geo_unit geo_crosswalk election_result respondent respondent_vote respondent_party issue respondent_issue model_run measure_registry estimate spatial_weight_definition spatial_weight_edge estimate_source_lineage derived_field gis_layer_registry; do
+            test "$(psql -h localhost -U politent -d politent -Atc "SELECT to_regclass('public.$t');")" = "public.$t"
+          done
+          test "$(psql -h localhost -U politent -d politent -Atc "SELECT count(*) FROM spatial_ref_sys WHERE srid=3006;")" = "1"
