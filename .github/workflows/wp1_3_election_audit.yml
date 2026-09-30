@@ -1,6 +1,12 @@
 name: WP1.3 Election Workbook Audit
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - "sources/election_sources.json"
+      - "scripts/audit_election_workbook.py"
+      - ".github/workflows/wp1_3_election_audit.yml"
   workflow_dispatch:
 
 jobs:
