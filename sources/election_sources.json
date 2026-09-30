@@ -1,0 +1,42 @@
+{
+  "manifest_version": "1.0",
+  "audited_at": "2026-09-30",
+  "status": "STAGED_UNTIL_WP1.2_ACCEPTED",
+  "sources": [
+    {
+      "source_id": "VAL_RD_FINAL_2026",
+      "authority": "Swedish Election Authority (Valmyndigheten)",
+      "election_id": "SE_RD_2026",
+      "election_type": "parliamentary",
+      "election_date": "2026-09-13",
+      "data_state": "final",
+      "landing_page": "https://www.val.se/valresultat-och-statistik/statistik-och-data/radata-val-2026",
+      "download_url": "https://www.val.se/download/18.7faaad3f1a0b0c300e458a/1790069872234/roster-per-distrikt-slutligt-antal-roster-inklusive-totalt-valdeltagande-riksdagsvalet-2026.xlsx",
+      "format": "XLSX",
+      "geographic_levels": [
+        "polling_district",
+        "municipality",
+        "parliamentary_constituency",
+        "county"
+      ],
+      "access": "OPEN",
+      "attribution": "Valmyndigheten"
+    },
+    {
+      "source_id": "VAL_RD_FINAL_2022",
+      "authority": "Swedish Election Authority (Valmyndigheten)",
+      "election_id": "SE_RD_2022",
+      "election_type": "parliamentary",
+      "election_date": "2022-09-11",
+      "data_state": "final",
+      "landing_page": "https://www.val.se/valresultat-och-statistik/statistik-och-data/radata-fran-val-2002-2022",
+      "download_url": "https://www.val.se/download/18.162047b519a91d0533118f4b/1764336897948/Roster-per-distrikt-slutligt-antal-roster-inklusive-totalt-valdeltagande-riksdagsvalet-2022.xlsx",
+      "format": "XLSX",
+      "geographic_levels": [
+        "polling_district"
+      ],
+      "access": "OPEN",
+      "attribution": "Valmyndigheten"
+    }
+  ]
+}
