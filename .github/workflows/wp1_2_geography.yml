@@ -1,0 +1,32 @@
+name: WP1.2 Geography Source Validation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "sources/geography_sources.json"
+      - "scripts/wp1_2_geography_qa.sh"
+      - "scripts/parse_valdistrict_crosswalk.py"
+      - "schemas/politent_geography_schema.sql"
+      - ".github/workflows/wp1_2_geography.yml"
+  workflow_dispatch:
+
+jobs:
+  geography-source-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install GIS and XLSX tooling
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gdal-bin unzip python3-openpyxl
+
+      - name: Validate live official geography sources
+        run: bash scripts/wp1_2_geography_qa.sh
+
+      - name: Static SQL validation
+        run: |
+          grep -q "CREATE TABLE IF NOT EXISTS geography_release" schemas/politent_geography_schema.sql
+          grep -q "CREATE TABLE IF NOT EXISTS geo_unit_release" schemas/politent_geography_schema.sql
+          grep -q "CREATE TABLE IF NOT EXISTS geo_crosswalk_quality" schemas/politent_geography_schema.sql
