@@ -1,0 +1,93 @@
+{
+  "manifest_version": "1.0",
+  "audited_at": "2026-09-30",
+  "canonical_crs_epsg": 3006,
+  "sources": [
+    {
+      "source_id": "SCB_DESO_2018",
+      "authority": "Statistics Sweden (SCB)",
+      "geo_type": "DeSO",
+      "version_label": "2018",
+      "valid_from": "2018-01-01",
+      "landing_page": "https://www.scb.se/vara-tjanster/oppna-data/oppna-geodata/demografiska-statistikomraden-deso/",
+      "download_url": "https://geodata.scb.se/geoserver/stat/wfs?REQUEST=GetFeature&TYPENAMES=stat%3ADeSO_2018&outputFormat=geopackage&service=WFS&version=1.1.0",
+      "format": "GeoPackage",
+      "expected_feature_count": 5984,
+      "access": "OPEN",
+      "license_note": "SCB open data",
+      "notes": "Historical statistics published on DeSO 2018 are not silently recoded to DeSO 2025."
+    },
+    {
+      "source_id": "SCB_DESO_2025",
+      "authority": "Statistics Sweden (SCB)",
+      "geo_type": "DeSO",
+      "version_label": "2025",
+      "valid_from": "2025-01-01",
+      "landing_page": "https://www.scb.se/vara-tjanster/oppna-data/oppna-geodata/demografiska-statistikomraden-deso/",
+      "download_url": "https://geodata.scb.se/geoserver/stat/wfs?REQUEST=GetFeature&TYPENAMES=stat%3ADeSO_2025&outputFormat=geopackage&service=WFS&version=1.1.0",
+      "format": "GeoPackage",
+      "expected_feature_count": 6160,
+      "access": "OPEN",
+      "license_note": "SCB open data",
+      "notes": "Current DeSO release."
+    },
+    {
+      "source_id": "SCB_DESO_CHANGES_2018_2025",
+      "authority": "Statistics Sweden (SCB)",
+      "geo_type": "DeSO_crosswalk_reference",
+      "version_label": "2018-2025",
+      "landing_page": "https://www.scb.se/vara-tjanster/oppna-data/oppna-geodata/demografiska-statistikomraden-deso/",
+      "download_url": "https://www.scb.se/contentassets/923c3627a8a042a5b9215e8ff3bde0a3/deso-historiska-forandringar-2025-09-19.xlsx",
+      "format": "XLSX",
+      "access": "OPEN",
+      "license_note": "SCB open data",
+      "notes": "Official historical change reference; geometry-based crosswalk still requires explicit weighting."
+    },
+    {
+      "source_id": "VAL_POLLING_DISTRICTS_2026",
+      "authority": "Swedish Election Authority (Valmyndigheten)",
+      "geo_type": "polling_district",
+      "version_label": "2026",
+      "valid_from": "2026-01-01",
+      "landing_page": "https://www.val.se/valresultat-och-statistik/statistik-och-data/radata-val-2026",
+      "download_url": "https://www.val.se/download/18.332cf48819bd61ac1513889/1785491689960/valdistrikt-riket-2026.zip",
+      "format": "ZIP_JSON",
+      "expected_feature_count": 6312,
+      "crs_epsg": 3006,
+      "access": "OPEN",
+      "license_note": "Free to use with Valmyndigheten cited as source",
+      "notes": "Official 2026 polling-district maps for all Sweden."
+    },
+    {
+      "source_id": "VAL_POLLING_DISTRICT_COMPARE_2022_2026",
+      "authority": "Swedish Election Authority (Valmyndigheten)",
+      "geo_type": "polling_district_crosswalk_reference",
+      "version_label": "2022-2026",
+      "landing_page": "https://www.val.se/valresultat-och-statistik/statistik-och-data/radata-val-2026",
+      "download_url": "https://www.val.se/download/18.1a2972da19f159e73fd3a47/1787064655347/valdistrikt-jamforelser-mellan-2022-och-2026.xlsx",
+      "format": "XLSX",
+      "access": "OPEN",
+      "notes": "Official comparability assessment."
+    },
+    {
+      "source_id": "VAL_HISTORICAL_2002_2022",
+      "authority": "Swedish Election Authority (Valmyndigheten)",
+      "geo_type": "polling_district_historical",
+      "version_label": "2002-2022",
+      "landing_page": "https://www.val.se/valresultat-och-statistik/statistik-och-data/radata-fran-val-2002-2022",
+      "format": "MIXED",
+      "access": "OPEN",
+      "notes": "Historical results and geography materials vary by election year; 2022 materials include official 2018-2022 district comparability."
+    },
+    {
+      "source_id": "SCB_WFS",
+      "authority": "Statistics Sweden (SCB)",
+      "geo_type": "service",
+      "version_label": "current",
+      "landing_page": "https://www.scb.se/vara-tjanster/oppna-data/oppna-geodata/",
+      "download_url": "https://geodata.scb.se/geoserver/stat/wfs?service=wfs&version=1.1.0&request=GetCapabilities",
+      "format": "WFS",
+      "access": "OPEN"
+    }
+  ]
+}
