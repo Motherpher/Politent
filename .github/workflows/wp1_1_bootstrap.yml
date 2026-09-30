@@ -12,6 +12,8 @@ on:
       - ".env.example"
       - "Makefile"
       - ".github/workflows/wp1_1_bootstrap.yml"
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 jobs:
