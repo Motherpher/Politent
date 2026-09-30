@@ -7,25 +7,62 @@ on:
       - "sources/geography_sources.json"
       - "scripts/wp1_2_geography_qa.sh"
       - "scripts/parse_valdistrict_crosswalk.py"
+      - "scripts/validate_geography_manifest.py"
+      - "schemas/politent_core_schema.sql"
       - "schemas/politent_geography_schema.sql"
+      - "schemas/seed_geography_registry.sql"
       - ".github/workflows/wp1_2_geography.yml"
   workflow_dispatch:
 
 jobs:
   geography-source-qa:
     runs-on: ubuntu-latest
+    services:
+      postgis:
+        image: postgis/postgis:16-3.4
+        env:
+          POSTGRES_DB: politent
+          POSTGRES_USER: politent
+          POSTGRES_PASSWORD: politent_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U politent -d politent"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+
+    env:
+      PGPASSWORD: politent_ci
+
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install GIS and XLSX tooling
+      - name: Validate source manifest
+        run: python3 scripts/validate_geography_manifest.py
+
+      - name: Install GIS, PostgreSQL and XLSX tooling
         run: |
           sudo apt-get update
-          sudo apt-get install -y gdal-bin unzip python3-openpyxl
+          sudo apt-get install -y gdal-bin unzip python3-openpyxl postgresql-client
 
       - name: Validate live official geography sources
         run: bash scripts/wp1_2_geography_qa.sh
 
-      - name: Static SQL validation
+      - name: Apply canonical and geography schemas
+        run: |
+          psql -h localhost -U politent -d politent -v ON_ERROR_STOP=1 -f schemas/politent_core_schema.sql
+          psql -h localhost -U politent -d politent -v ON_ERROR_STOP=1 -f schemas/politent_geography_schema.sql
+          psql -h localhost -U politent -d politent -v ON_ERROR_STOP=1 -f schemas/seed_geography_registry.sql
+
+      - name: Validate geography registry
+        run: |
+          test "$(psql -h localhost -U politent -d politent -Atc "SELECT count(*) FROM geography_release;")" = "3"
+          test "$(psql -h localhost -U politent -d politent -Atc "SELECT expected_feature_count FROM geography_release WHERE release_id='DESO_2018';")" = "5984"
+          test "$(psql -h localhost -U politent -d politent -Atc "SELECT expected_feature_count FROM geography_release WHERE release_id='DESO_2025';")" = "6160"
+          test "$(psql -h localhost -U politent -d politent -Atc "SELECT expected_feature_count FROM geography_release WHERE release_id='POLLING_DISTRICT_2026';")" = "6312"
+
+      - name: Static geography SQL validation
         run: |
           grep -q "CREATE TABLE IF NOT EXISTS geography_release" schemas/politent_geography_schema.sql
           grep -q "CREATE TABLE IF NOT EXISTS geo_unit_release" schemas/politent_geography_schema.sql
