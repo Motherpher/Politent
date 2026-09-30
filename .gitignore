@@ -1,0 +1,46 @@
+# Secrets / local environment
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+
+# R
+.Rhistory
+.RData
+.Rproj.user/
+
+# QGIS local state / caches
+*.qgz~
+*.qgs~
+.qgis/
+qgis/cache/
+qgis/local/
+
+# Data
+data/raw/*
+data/harmonised/*
+data/modelled/*
+data/serving/*
+!data/**/README.md
+!data/**/.gitkeep
+
+# Database dumps
+*.dump
+*.backup
+*.sql.gz
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Logs
+logs/
+*.log
