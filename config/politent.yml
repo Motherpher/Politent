@@ -1,0 +1,61 @@
+project:
+  name: Politent
+  version: "3.0"
+  jurisdiction: Sweden
+  canonical_crs_epsg: 3006
+  default_timezone: Europe/Stockholm
+
+epistemic_states:
+  - OBSERVED
+  - ESTIMATED
+  - DERIVED
+  - HYPOTHESIS
+  - SCENARIO
+
+data_zones:
+  - raw
+  - harmonised
+  - modelled
+  - serving
+
+qgis:
+  project_name: "Politent 3.0"
+  project_file: "qgis/Politent_3_0.qgs"
+  datasource: postgis
+  canonical_groups:
+    - "00_METADATA_QA"
+    - "10_REFERENCE_GEOGRAPHY"
+    - "20_OBSERVED_ELECTIONS"
+    - "30_POPULATION_CONTEXT"
+    - "40_BEHAVIOURAL_OBSERVED"
+    - "50_MODEL_ESTIMATES"
+    - "60_RELATIONS_TRANSITIONS"
+    - "70_SPATIAL_ANALYTICS"
+    - "80_IDEOLOGY_ISSUES"
+    - "90_POLITENT_TERRAIN"
+    - "99_UNCERTAINTY_QUALITY"
+
+database:
+  schema_source: "schemas/politent_core_schema.sql"
+  required_extensions:
+    - postgis
+  required_tables:
+    - source_registry
+    - party
+    - election
+    - geo_unit
+    - geo_crosswalk
+    - election_result
+    - respondent
+    - respondent_vote
+    - respondent_party
+    - issue
+    - respondent_issue
+    - model_run
+    - measure_registry
+    - estimate
+    - spatial_weight_definition
+    - spatial_weight_edge
+    - estimate_source_lineage
+    - derived_field
+    - gis_layer_registry
