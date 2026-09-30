@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qgis projectname="Politent 3.0" version="3.34.0">
+  <homePath path=""/>
+  <title>Politent 3.0</title>
+  <autotransaction active="0"/>
+  <evaluateDefaultValues active="0"/>
+  <trust active="0"/>
+  <projectCrs>
+    <spatialrefsys>
+      <authid>EPSG:3006</authid>
+      <description>SWEREF99 TM</description>
+      <projectionacronym>utm</projectionacronym>
+      <ellipsoidacronym>GRS80</ellipsoidacronym>
+      <geographicflag>false</geographicflag>
+    </spatialrefsys>
+  </projectCrs>
+  <layer-tree-group checked="Qt::Checked" expanded="1" name="">
+    <layer-tree-group checked="Qt::Checked" expanded="1" name="00_METADATA_QA"/>
+    <layer-tree-group checked="Qt::Checked" expanded="1" name="10_REFERENCE_GEOGRAPHY"/>
+    <layer-tree-group checked="Qt::Checked" expanded="1" name="20_OBSERVED_ELECTIONS"/>
+    <layer-tree-group checked="Qt::Checked" expanded="1" name="30_POPULATION_CONTEXT"/>
+    <layer-tree-group checked="Qt::Checked" expanded="1" name="40_BEHAVIOURAL_OBSERVED"/>
+    <layer-tree-group checked="Qt::Checked" expanded="1" name="50_MODEL_ESTIMATES"/>
+    <layer-tree-group checked="Qt::Checked" expanded="1" name="60_RELATIONS_TRANSITIONS"/>
+    <layer-tree-group checked="Qt::Checked" expanded="1" name="70_SPATIAL_ANALYTICS"/>
+    <layer-tree-group checked="Qt::Checked" expanded="1" name="80_IDEOLOGY_ISSUES"/>
+    <layer-tree-group checked="Qt::Checked" expanded="1" name="90_POLITENT_TERRAIN"/>
+    <layer-tree-group checked="Qt::Checked" expanded="1" name="99_UNCERTAINTY_QUALITY"/>
+  </layer-tree-group>
+  <projectlayers/>
+  <properties/>
+</qgis>
