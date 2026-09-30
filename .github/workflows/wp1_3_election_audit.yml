@@ -1,0 +1,43 @@
+name: WP1.3 Election Workbook Audit
+
+on:
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install XLSX tooling
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-openpyxl
+
+      - name: Download official final parliamentary results
+        run: |
+          curl -L --fail --retry 3 'https://www.val.se/download/18.7faaad3f1a0b0c300e458a/1790069872234/roster-per-distrikt-slutligt-antal-roster-inklusive-totalt-valdeltagande-riksdagsvalet-2026.xlsx' -o /tmp/rd2026.xlsx
+          curl -L --fail --retry 3 'https://www.val.se/download/18.162047b519a91d0533118f4b/1764336897948/Roster-per-distrikt-slutligt-antal-roster-inklusive-totalt-valdeltagande-riksdagsvalet-2022.xlsx' -o /tmp/rd2022.xlsx
+
+      - name: Audit workbook structures
+        run: |
+          mkdir -p /tmp/audit
+          python3 scripts/audit_election_workbook.py /tmp/rd2026.xlsx /tmp/audit/rd2026.json
+          python3 scripts/audit_election_workbook.py /tmp/rd2022.xlsx /tmp/audit/rd2022.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          for p in [Path('/tmp/audit/rd2026.json'), Path('/tmp/audit/rd2022.json')]:
+              d=json.loads(p.read_text())
+              print('\n',p.name,d['sha256'])
+              for s in d['sheets']:
+                  print(s['title'],s['max_row'],s['max_column'])
+                  for row in s['preview'][:5]: print(row[:15])
+          PY
+
+      - name: Upload audit artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: wp1-3-election-workbook-audit
+          path: /tmp/audit/
+          retention-days: 14
