@@ -21,6 +21,8 @@ feature_count() {
 c18="$(feature_count "$WORK/deso_2018.gpkg")"
 c25="$(feature_count "$WORK/deso_2025.gpkg")"
 
+echo "DeSO 2018 detected features: $c18"
+echo "DeSO 2025 detected features: $c25"
 test "$c18" = "5984"
 test "$c25" = "6160"
 
@@ -37,6 +39,7 @@ while IFS= read -r -d '' f; do
 done < <(find "$WORK/val2026" -type f -iname '*.json' -print0)
 
 test "$json_files" -gt 0
+echo "Valdistrikt 2026 detected features: $val_count in $json_files JSON file(s)"
 test "$val_count" = "6312"
 
 python3 scripts/parse_valdistrict_crosswalk.py \
