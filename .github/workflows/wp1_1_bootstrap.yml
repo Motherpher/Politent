@@ -55,6 +55,6 @@ jobs:
         run: |
           psql -h localhost -U politent -d politent -Atc "SELECT extversion FROM pg_extension WHERE extname='postgis';"
           for t in source_registry party election geo_unit geo_crosswalk election_result respondent respondent_vote respondent_party issue respondent_issue model_run measure_registry estimate spatial_weight_definition spatial_weight_edge estimate_source_lineage derived_field gis_layer_registry; do
-            test "$(psql -h localhost -U politent -d politent -Atc "SELECT to_regclass('public.$t');")" = "public.$t"
+            test "$(psql -h localhost -U politent -d politent -Atc "SELECT to_regclass('public.$t');")" = "$t"
           done
           test "$(psql -h localhost -U politent -d politent -Atc "SELECT count(*) FROM spatial_ref_sys WHERE srid=3006;")" = "1"
