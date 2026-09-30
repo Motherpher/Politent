@@ -30,15 +30,14 @@ rm -rf "$WORK/val2026"
 mkdir -p "$WORK/val2026"
 unzip -q "$WORK/valdistrikt_2026.zip" -d "$WORK/val2026"
 
-val_count=0
-json_files=0
-while IFS= read -r -d '' f; do
-  json_files=$((json_files+1))
-  count="$(feature_count "$f")"
-  val_count=$((val_count+count))
-done < <(find "$WORK/val2026" -type f -iname '*.json' -print0)
-
+mapfile -d '' val_json_files < <(find "$WORK/val2026" -type f -iname '*.json' -print0)
+json_files="${#val_json_files[@]}"
 test "$json_files" -gt 0
+
+counter_output="$(python3 scripts/count_valdistrict_json.py "${val_json_files[@]}")"
+echo "$counter_output"
+val_count="$(echo "$counter_output" | tail -n 1)"
+
 echo "Valdistrikt 2026 detected features: $val_count in $json_files JSON file(s)"
 test "$val_count" = "6312"
 
