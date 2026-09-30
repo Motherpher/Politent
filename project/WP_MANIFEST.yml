@@ -31,11 +31,11 @@ phases:
         depends_on: []
       - id: WP1.2
         title: Versioned geography and crosswalk engine
-        status: ACTIVE
+        status: ACCEPTED
         depends_on: [WP1.1]
       - id: WP1.3
         title: Official election-result backbone
-        status: STAGED
+        status: ACTIVE
         depends_on: [WP1.1, WP1.2]
       - id: WP1.4
         title: Population/context and poststratification frame
@@ -120,5 +120,5 @@ phases:
 
 current:
   phase: P1
-  wp: WP1.2
+  wp: WP1.3
   next_gate: director_acceptance
