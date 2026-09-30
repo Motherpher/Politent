@@ -29,10 +29,16 @@ test "$c25" = "6160"
 rm -rf "$WORK/val2026"
 mkdir -p "$WORK/val2026"
 unzip -q "$WORK/valdistrikt_2026.zip" -d "$WORK/val2026"
+echo "Election Authority ZIP contents:"
+find "$WORK/val2026" -maxdepth 3 -type f -printf "%P\n" | head -50
 
 mapfile -d '' val_json_files < <(find "$WORK/val2026" -type f -iname '*.json' -print0)
 json_files="${#val_json_files[@]}"
-test "$json_files" -gt 0
+echo "Election Authority JSON file count: $json_files"
+if [[ "$json_files" -eq 0 ]]; then
+  echo "No .json files detected in Election Authority GIS ZIP" >&2
+  exit 1
+fi
 
 counter_output="$(python3 scripts/count_valdistrict_json.py "${val_json_files[@]}")"
 echo "$counter_output"
