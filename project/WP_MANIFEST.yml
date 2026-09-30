@@ -1,0 +1,124 @@
+project: Politent
+version: "3.0"
+execution_mode: household_family
+protocol: POL-HH-001
+status: active
+activated: 2026-09-30
+
+roles:
+  director: progression_acceptance
+  janitor: drift_hygiene_scan
+  handyman: bounded_repair
+  household_controller: orchestration_only
+
+states:
+  - STAGED
+  - READY
+  - ACTIVE
+  - REVIEW
+  - ACCEPTED
+  - BLOCKED
+  - REPAIR
+  - REJECTED
+
+phases:
+  - id: P1
+    title: Data Foundation and QGIS Spatial Backbone
+    work_packages:
+      - id: WP1.1
+        title: Project scaffold and PostGIS environment
+        status: ACTIVE
+        depends_on: []
+      - id: WP1.2
+        title: Versioned geography and crosswalk engine
+        status: STAGED
+        depends_on: [WP1.1]
+      - id: WP1.3
+        title: Official election-result backbone
+        status: STAGED
+        depends_on: [WP1.1, WP1.2]
+      - id: WP1.4
+        title: Population/context and poststratification frame
+        status: STAGED
+        depends_on: [WP1.1, WP1.2]
+      - id: WP1.5
+        title: QGIS base implementation and QA
+        status: STAGED
+        depends_on: [WP1.2, WP1.3, WP1.4]
+
+  - id: P2
+    title: Behaviour, Electoral Potential and Attachment
+    work_packages:
+      - id: WP2.1
+        title: Survey corpus audit and harmonisation
+        status: STAGED
+        depends_on: [WP1.5]
+      - id: WP2.2
+        title: Voter transition and volatility engine
+        status: STAGED
+        depends_on: [WP2.1]
+      - id: WP2.3
+        title: PTV, consideration-set and two-hurdle engine
+        status: STAGED
+        depends_on: [WP2.1]
+      - id: WP2.4
+        title: Partisan attachment and latent-state comparison
+        status: STAGED
+        depends_on: [WP2.1, WP2.2, WP2.3]
+      - id: WP2.5
+        title: Behavioural synthesis and validation
+        status: STAGED
+        depends_on: [WP2.2, WP2.3, WP2.4]
+
+  - id: P3
+    title: Small-Area, Spatial and QGIS Political Terrain
+    work_packages:
+      - id: WP3.1
+        title: MRP and small-area estimation engine
+        status: STAGED
+        depends_on: [WP1.4, WP2.5]
+      - id: WP3.2
+        title: Spatial weights and exploratory spatial statistics
+        status: STAGED
+        depends_on: [WP3.1]
+      - id: WP3.3
+        title: Ideology and issue layers
+        status: STAGED
+        depends_on: [WP2.5]
+      - id: WP3.4
+        title: Politent Political Terrain and functional fields
+        status: STAGED
+        depends_on: [WP3.1, WP3.2, WP3.3]
+      - id: WP3.5
+        title: MAUP, spatial robustness and cross-scale validation
+        status: STAGED
+        depends_on: [WP3.4]
+
+  - id: P4
+    title: Time, 2026 Integration and Production System
+    work_packages:
+      - id: WP4.1
+        title: 2026 source completion and incremental ingest
+        status: STAGED
+        depends_on: [WP2.5, WP3.5]
+      - id: WP4.2
+        title: Historical spatiotemporal reconstruction
+        status: STAGED
+        depends_on: [WP3.5]
+      - id: WP4.3
+        title: Historical back-test and hypothesis programme
+        status: STAGED
+        depends_on: [WP4.2]
+      - id: WP4.4
+        title: Production QGIS package, automation and exports
+        status: STAGED
+        depends_on: [WP4.1, WP4.2, WP4.3]
+      - id: WP4.5
+        title: Release audit, documentation and Politent 3.0 handoff
+        status: STAGED
+        depends_on: [WP4.4]
+
+current:
+  phase: P1
+  wp: WP1.1
+  next_gate: director_acceptance
