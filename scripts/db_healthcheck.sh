@@ -17,7 +17,7 @@ docker compose exec -T db psql -U "$DB_USER" -d "$DB_NAME" -Atc "SELECT extversi
 echo "Checking required tables..."
 for table in "${required_tables[@]}"; do
   found="$(docker compose exec -T db psql -U "$DB_USER" -d "$DB_NAME" -Atc "SELECT to_regclass('public.$table');")"
-  if [[ "$found" != "public.$table" ]]; then
+  if [[ "$found" != "$table" ]]; then
     echo "Missing table: $table" >&2
     exit 1
   fi
