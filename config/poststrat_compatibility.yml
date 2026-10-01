@@ -1,0 +1,50 @@
+# Politent WP1.4 — poststratification compatibility registry
+#
+# "joint_observed: true" means dimensions occur jointly in the SAME SCB table.
+# Rows from different source_ids must not be multiplied to create synthetic joint cells.
+
+sources:
+  SCB_CTX_POP_AGE_SEX_DESO:
+    matrix_id: "000007Y7"
+    dimensions: [region, age, sex, year]
+    joint_observed: true
+    candidate_frame: AGE_SEX
+    role: primary_candidate
+
+  SCB_CTX_BIRTHREGION_SEX_DESO:
+    matrix_id: "000007Y5"
+    dimensions: [region, region_of_birth, sex, year]
+    joint_observed: true
+    candidate_frame: BIRTHREGION_SEX
+    role: secondary_candidate
+
+  SCB_CTX_LABOUR_DESO:
+    matrix_id: "0000089X"
+    dimensions: [observation, region, sex, age, year]
+    joint_observed: true
+    candidate_frame: LABOUR_AGE_SEX
+    role: contextual_or_specialized_frame
+
+  SCB_CTX_EDUCATION_DESO:
+    matrix_id: "000007Z6"
+    dimensions: [region, education_level, year]
+    joint_observed: true
+    candidate_frame: EDUCATION
+    role: contextual_or_reduced_frame
+
+  SCB_CTX_INCOME_DESO:
+    matrix_id: "000008A4"
+    dimensions: [observation, region, sex, year]
+    joint_observed: true
+    candidate_frame: null
+    role: contextual_covariate
+
+forbidden_composite_examples:
+  - [age, sex, education_level]
+  - [age, sex, region_of_birth, education_level]
+  - [age, sex, labour_status, education_level, region_of_birth]
+
+rule: >
+  A richer poststratification frame may only be declared when the dimensions are
+  jointly observed in one defensible source or are produced by a separately
+  documented statistical model whose uncertainty is carried forward.
