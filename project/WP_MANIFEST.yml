@@ -39,7 +39,7 @@ phases:
         depends_on: [WP1.1, WP1.2]
       - id: WP1.4
         title: Population/context and poststratification frame
-        status: STAGED
+        status: ACTIVE
         depends_on: [WP1.1, WP1.2]
       - id: WP1.5
         title: QGIS base implementation and QA
@@ -120,5 +120,6 @@ phases:
 
 current:
   phase: P1
-  wp: WP1.3
+  wp: WP1.4
+  active_wps: [WP1.3, WP1.4]
   next_gate: director_acceptance
