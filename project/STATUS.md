@@ -3,31 +3,31 @@
 **Execution mode:** Household Family  
 **Protocol:** POL-HH-001  
 **Current phase:** Phase I — Data Foundation and QGIS Spatial Backbone  
-**Current WP:** WP1.3 — Official election-result backbone  
+**Current WP focus:** WP1.4 — Population/context and poststratification frame  
+**Parallel active WP:** WP1.3 — Official election-result backbone  
 **State:** ACTIVE
 
-## WP1.2 Director decision
+## Accepted
 
-**ACCEPTED.**
+- WP1.1 — Project scaffold and PostGIS environment
+- WP1.2 — Versioned geography and crosswalk engine
 
-Validated through live official-source and PostGIS runtime checks:
-- SCB DeSO 2018 source: 5,984 features;
-- SCB DeSO 2025 source: 6,160 features;
-- Valmyndigheten 2026 national polling-district GeoJSON: 6,312 features;
-- official 2022–2026 polling-district comparison workbook: 6,312 comparison rows;
-- geography source manifest: PASS;
-- geography extension schema: PASS;
-- source/release seed registry: PASS;
-- PostGIS geography registry validation: PASS.
+## Active
 
-Household repairs during WP1.2 corrected two source-format assumptions:
-1. the Election Authority archive contains GeoJSON rather than a generic .json-only file;
-2. the official comparison workbook contains multiple sheets, so the parser now explicitly selects the true `Jämförelser` table and recognized column set.
+### WP1.3 — Official election-result backbone
+Initial official election workbook audit has passed. Remaining gate:
+parser contract → canonical party/election/result ingest → reconciliation against official totals → Director acceptance.
 
-## Current gate
+### WP1.4 — Population/context and poststratification frame
+Activated because its hard dependencies (WP1.1 and WP1.2) are accepted.
 
-WP1.3 must ingest and validate the official parliamentary election-result backbone against the versioned geography registry.
+Current execution:
+SCB source audit → population/context source manifest → marginal/joint-variable compatibility matrix → poststratification schema → live-source/DB validation → Director review.
 
-## Next execution sequence
+## Scientific guardrail
 
-Janitor workbook/source audit → parser contract → canonical party/election/result ingest → reconciliation checks → Director acceptance.
+Politent will not manufacture a joint poststratification population from separate marginal SCB tables. A full age × sex × education × background × labour-status frame is only created where a valid joint source supports it. Otherwise the frame remains lower-dimensional or requires a separate defensible data source/model.
+
+## Phase-I dependency state
+
+WP1.5 remains STAGED until both WP1.3 and WP1.4 are ACCEPTED.
