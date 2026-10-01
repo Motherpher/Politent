@@ -1,0 +1,139 @@
+{
+  "manifest_version": "1.0",
+  "audited_at": "2026-10-01",
+  "authority": "Statistics Sweden (SCB)",
+  "api": {
+    "name": "PxWebApi v2",
+    "launched": "2025-10",
+    "documentation": "https://www.scb.se/en/services/open-data-api/pxwebapi/pxwebapi-2.0",
+    "max_cells_per_query": 150000,
+    "rate_limit_note": "SCB documents a maximum of 30 calls per 10 seconds per IP for the Statistical Database API."
+  },
+  "sources": [
+    {
+      "source_id": "SCB_CTX_POP_AGE_SEX_DESO",
+      "matrix_id": "000007Y7",
+      "title": "Population per region by age and sex",
+      "landing_page": "https://www.statistikdatabasen.scb.se/pxweb/en/ssd/START__BE__BE0101__BE0101Y/FolkmDesoAldKon/",
+      "time_coverage": "2010-2025",
+      "unit": "number",
+      "reference_time": "31 December each year",
+      "joint_dimensions": [
+        "region",
+        "age",
+        "sex",
+        "year"
+      ],
+      "candidate_role": [
+        "population_denominator",
+        "poststrat_frame_age_sex"
+      ],
+      "geo_version_rule": {
+        "through_2023": "DeSO 2018",
+        "from_2024": "DeSO 2025"
+      },
+      "disclosure_note": "Source metadata/footnotes must be retained per year; current SCB small-area releases use disclosure-control methods that can affect additivity."
+    },
+    {
+      "source_id": "SCB_CTX_BIRTHREGION_SEX_DESO",
+      "matrix_id": "000007Y5",
+      "title": "Population per region by region of birth and sex",
+      "landing_page": "https://www.statistikdatabasen.scb.se/pxweb/en/ssd/START__BE__BE0101__BE0101Y/FolkmDesoLandKon/",
+      "time_coverage": "2010-2025",
+      "unit": "number",
+      "reference_time": "31 December each year",
+      "joint_dimensions": [
+        "region",
+        "region_of_birth",
+        "sex",
+        "year"
+      ],
+      "candidate_role": [
+        "context_background",
+        "poststrat_frame_birthregion_sex"
+      ],
+      "geo_version_rule": {
+        "through_2023": "DeSO 2018",
+        "from_2024": "DeSO 2025"
+      },
+      "disclosure_note": "SCB states that 2025 onward uses Cell Key Method uncertainty; up to and including 2024 the table notes Controlled Tabular Adjustment. Totals/components may not add exactly."
+    },
+    {
+      "source_id": "SCB_CTX_LABOUR_DESO",
+      "matrix_id": "0000089X",
+      "title": "Labour market status by region of residence, region (DeSO/RegSO), sex and age. Annual register",
+      "landing_page": "https://www.statistikdatabasen.scb.se/pxweb/en/ssd/START__AM__AM0210__AM0210G/ArRegDesoStatusN/",
+      "time_coverage": "2020-2024",
+      "unit": "number",
+      "reference_time": "year",
+      "joint_dimensions": [
+        "observation",
+        "region",
+        "sex",
+        "age",
+        "year"
+      ],
+      "candidate_role": [
+        "context_labour",
+        "poststrat_frame_labour_age_sex"
+      ],
+      "geo_version_rule": {
+        "through_2023": "DeSO 2018",
+        "from_2024": "DeSO 2025"
+      },
+      "disclosure_note": "SCB notes statistical disclosure protection; reported totals may differ from sums of displayed components."
+    },
+    {
+      "source_id": "SCB_CTX_EDUCATION_DESO",
+      "matrix_id": "000007Z6",
+      "title": "Population 25–65 years of age by region and level of educational attainment",
+      "landing_page": "https://www.statistikdatabasen.scb.se/pxweb/en/ssd/START__UF__UF0506__UF0506D/UtbSUNBefDesoRegsoN/",
+      "time_coverage": "2024-2025",
+      "unit": "number of persons",
+      "reference_time": "year",
+      "joint_dimensions": [
+        "region",
+        "education_level",
+        "year"
+      ],
+      "candidate_role": [
+        "context_education",
+        "poststrat_frame_education"
+      ],
+      "geo_version_rule": {
+        "from_2024": "DeSO 2025"
+      },
+      "disclosure_note": "SCB notes that some persons cannot be linked below municipality and are assigned to a DeSO/RegSO within the municipality."
+    },
+    {
+      "source_id": "SCB_CTX_INCOME_DESO",
+      "matrix_id": "000008A4",
+      "title": "Income structure net income by region and sex",
+      "landing_page": "https://www.statistikdatabasen.scb.se/pxweb/en/ssd/START__HE__HE0110__HE0110I/Tab2InkDesoRegso/",
+      "time_coverage": "2011-2024",
+      "unit": "mean SEK thousands / share percent / persons",
+      "reference_time": "31 December each year",
+      "joint_dimensions": [
+        "observation",
+        "region",
+        "sex",
+        "year"
+      ],
+      "candidate_role": [
+        "context_income"
+      ],
+      "geo_version_rule": {
+        "historical": "source classification must be read from table metadata at extraction time"
+      },
+      "disclosure_note": "Treat as contextual/marginal source unless a joint MRP cell definition is explicitly supported."
+    }
+  ],
+  "synthesis_guardrail": {
+    "prohibited": "Do not multiply independent marginal tables to manufacture a joint population distribution.",
+    "allowed": [
+      "Use an observed joint table as a poststratification frame for the dimensions actually present.",
+      "Use separate context covariates as area-level predictors without pretending they form joint population cells.",
+      "Use an additional authorized source when a richer joint cell distribution is required."
+    ]
+  }
+}
