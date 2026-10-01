@@ -1,0 +1,67 @@
+name: WP1.4 Population Context Validation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "sources/population_context_sources.json"
+      - "config/poststrat_compatibility.yml"
+      - "schemas/politent_population_context_schema.sql"
+      - "schemas/seed_population_context_registry.sql"
+      - "schemas/seed_poststrat_candidate_frames.sql"
+      - "scripts/validate_population_context_sources.py"
+      - ".github/workflows/wp1_4_population_context.yml"
+  workflow_dispatch:
+
+jobs:
+  population-context:
+    runs-on: ubuntu-latest
+    services:
+      postgis:
+        image: postgis/postgis:16-3.4
+        env:
+          POSTGRES_DB: politent
+          POSTGRES_USER: politent
+          POSTGRES_PASSWORD: politent_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U politent -d politent"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+
+    env:
+      PGPASSWORD: politent_ci
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate live SCB source contracts
+        run: python3 scripts/validate_population_context_sources.py
+
+      - name: Install PostgreSQL client
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+
+      - name: Apply Politent schemas and registries
+        run: |
+          psql -h localhost -U politent -d politent -v ON_ERROR_STOP=1 -f schemas/politent_core_schema.sql
+          psql -h localhost -U politent -d politent -v ON_ERROR_STOP=1 -f schemas/politent_geography_schema.sql
+          psql -h localhost -U politent -d politent -v ON_ERROR_STOP=1 -f schemas/seed_geography_registry.sql
+          psql -h localhost -U politent -d politent -v ON_ERROR_STOP=1 -f schemas/politent_population_context_schema.sql
+          psql -h localhost -U politent -d politent -v ON_ERROR_STOP=1 -f schemas/seed_population_context_registry.sql
+          psql -h localhost -U politent -d politent -v ON_ERROR_STOP=1 -f schemas/seed_poststrat_candidate_frames.sql
+
+      - name: Validate population/context registry
+        run: |
+          test "$(psql -h localhost -U politent -d politent -Atc "SELECT count(*) FROM population_context_source;")" = "5"
+          test "$(psql -h localhost -U politent -d politent -Atc "SELECT matrix_id FROM population_context_source WHERE context_source_id='SCB_CTX_POP_AGE_SEX_DESO';")" = "000007Y7"
+          test "$(psql -h localhost -U politent -d politent -Atc "SELECT construction_method FROM poststrat_frame WHERE frame_id='PS_2025_DESO2025_AGE_SEX';")" = "DIRECT_JOINT_TABLE"
+          test "$(psql -h localhost -U politent -d politent -Atc "SELECT frame_status FROM poststrat_frame WHERE frame_id='PS_2025_DESO2025_AGE_SEX';")" = "CANDIDATE"
+
+      - name: Guard against unsupported synthetic frame declaration
+        run: |
+          grep -q "Do not multiply independent marginal tables" sources/population_context_sources.json
+          grep -q "DIRECT_JOINT_TABLE" schemas/politent_population_context_schema.sql
