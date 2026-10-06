@@ -73,3 +73,21 @@ Politent must:
 
 **Version:** 3.0 architecture  
 **Status:** canonical model definition and implementation scaffold
+
+---
+
+## Public provenance
+
+<p align="left">
+  <img src="https://raw.githubusercontent.com/Hybrismannen/form-flode-dna/main/assets/form-flode-logo.png" alt="Form & Flöde" width="120">
+</p>
+
+**Politent is developed by Linus Fast / Form & Flöde as an independent synthesis and analytical architecture.** The established statistical, electoral and spatial methods on which it draws remain attributable to their respective literatures and sources.
+
+Public provenance is governed by the **FFC Public Provenance Standard v1.0**.
+
+### Support independent Form & Flöde work
+
+Politent is made publicly available as part of Form & Flöde's independent research and development work. If the framework is useful to you, you can support its continued development.
+
+**[Support independent Form & Flöde work →](https://paypal.me/djlifehack)**
