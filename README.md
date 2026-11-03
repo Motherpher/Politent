@@ -6,6 +6,14 @@
 
 Politent does **not** claim to replace the established models it uses. Its contribution is their disciplined integration into a common data, estimation, validation and GIS architecture.
 
+## Start here — research work and verification
+
+- [Politent — Research, Models & Release (private Project)](https://github.com/orgs/Motherpher/projects/3) — 18 source-native work-package Issues organised by Data & Sources, Behavioural Models, Spatial & GIS, Temporal & Backtesting, and Release & Assurance
+- [Original source Issues](https://github.com/Motherpher/Politent/issues) — authoritative work, models, dependencies, PRs and verification conditions
+- [Project operating guide — FFOS WP02 review](https://github.com/Motherpher/FFOS/blob/ops/wo002-wp02-domain-projects-20261103/docs/governance/github-projects/wo002-wp02/D08-DOMAIN-PROJECT-USER-GUIDE-v1.md) — source-linked instructions, not a claim of validated models or production QGIS readiness
+
+**Authority:** The Project is a private planning layer. A source Issue being shown as Done or in Release & Assurance does not establish accepted research, model validity, deployed GIS or Director approval. The review-linked guide remains a candidate until its own source PR is accepted.
+
 ## Canonical stack
 
 ```text
